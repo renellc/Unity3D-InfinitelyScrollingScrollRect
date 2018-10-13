@@ -29,7 +29,7 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (scrollRect.vertical)
+        if (scrollContent.Vertical)
             positiveDrag = lastTouchPosition.y > eventData.position.y;
         else
             positiveDrag = lastTouchPosition.x > eventData.position.x;
@@ -47,11 +47,12 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private void HandleVerticalScroll()
     {
-
+        
     }
 
     private void HandleHorizontalScroll()
     {
-
+        int currItemIndex = positiveDrag ? scrollRect.content.childCount - 1 : 0;
+        var currItem = scrollRect.content.GetChild(currItemIndex);
     }
 }
