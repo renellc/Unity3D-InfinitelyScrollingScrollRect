@@ -54,9 +54,10 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         int currItemIndex = positiveDrag ? scrollRect.content.childCount - 1 : 0;
         var currItem = scrollRect.content.GetChild(currItemIndex);
-        float itemThreshold = transform.position.x + scrollContent.ParentWidth * 0.5f + outOfBoundsThreshold;
+        float posItemThreshold = transform.position.x + scrollContent.ParentWidth * 0.5f + outOfBoundsThreshold;
+        float negItemThreshold = transform.position.x - scrollContent.ParentWidth * 0.5f - outOfBoundsThreshold;
 
-        if (positiveDrag && currItem.position.x - scrollContent.ChildWidth * 0.5f > itemThreshold)
+        if (positiveDrag && currItem.position.x - scrollContent.ChildWidth * 0.5f > posItemThreshold)
         {
             var itemToBeShifted = scrollRect.content.GetChild(0);
             var newPos = new Vector2
@@ -66,6 +67,17 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
             };
             currItem.position = newPos;
             currItem.SetSiblingIndex(0);
+        }
+        else if (currItem.position.x + scrollContent.ChildWidth * 0.5f < negItemThreshold)
+        {
+            var itemToBeShifted = scrollRect.content.GetChild(scrollRect.content.childCount - 1);
+            var newPos = new Vector2
+            {
+                x = itemToBeShifted.position.x + scrollContent.ChildWidth * 1.5f - scrollContent.ItemSpacing,
+                y = itemToBeShifted.position.y
+            };
+            currItem.position = newPos;
+            currItem.SetSiblingIndex(scrollRect.content.childCount - 1);
         }
     }
 }
