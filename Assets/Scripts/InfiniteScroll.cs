@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
+public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IScrollHandler
 {
     [SerializeField]
     protected ScrollContent scrollContent;
@@ -12,7 +12,6 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
     private ScrollRect scrollRect;
     private Vector2 lastTouchPosition;
     private bool positiveDrag;
-
 
     private void Start()
     {
@@ -39,6 +38,14 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
         }
 
         lastTouchPosition = eventData.position;
+    }
+
+    public void OnScroll(PointerEventData eventData)
+    {
+        if (scrollContent.Vertical)
+            positiveDrag = eventData.scrollDelta.y > 0;
+        else
+            positiveDrag = eventData.scrollDelta.y < 0;
     }
 
     public void OnViewScroll()
