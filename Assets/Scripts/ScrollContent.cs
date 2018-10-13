@@ -29,35 +29,25 @@ public class ScrollContent : MonoBehaviour
     /// </summary>
     public bool Vertical { get { return vertical; } }
 
+    /// <summary>
+    /// The width of the scroll content.
+    /// </summary>
+    public float Width { get { return width; } }
+
+    /// <summary>
+    /// The height of the scroll content.
+    /// </summary>
+    public float Height { get { return height; } }
+
+    /// <summary>
+    /// The width for each child of the scroll view.
+    /// </summary>
     public float ChildWidth { get { return childWidth; } }
 
+    /// <summary>
+    /// The height for each child of the scroll view.
+    /// </summary>
     public float ChildHeight { get { return childHeight; } }
-
-    public float ParentWidth { get { return parentWidth; } }
-
-    public float ParentHeight { get { return parentHeight; } }
-
-    #endregion
-
-    #region Protected Members
-
-    /// <summary>
-    /// How far apart each item is in the scroll view.
-    /// </summary>
-    [SerializeField]
-    protected float itemSpacing;
-
-    /// <summary>
-    /// How much the items are indented from the top/bottom and left/right of the scroll view.
-    /// </summary>
-    [SerializeField]
-    protected float horizontalMargin, verticalMargin;
-
-    /// <summary>
-    /// Is the scroll view oriented horizontall or vertically?
-    /// </summary>
-    [SerializeField]
-    protected bool horizontal, vertical;
 
     #endregion
 
@@ -76,12 +66,30 @@ public class ScrollContent : MonoBehaviour
     /// <summary>
     /// The width and height of the parent.
     /// </summary>
-    private float parentWidth, parentHeight;
+    private float width, height;
 
     /// <summary>
     /// The width and height of the children GameObjects.
     /// </summary>
     private float childWidth, childHeight;
+
+    /// <summary>
+    /// How far apart each item is in the scroll view.
+    /// </summary>
+    [SerializeField]
+    private float itemSpacing;
+
+    /// <summary>
+    /// How much the items are indented from the top/bottom and left/right of the scroll view.
+    /// </summary>
+    [SerializeField]
+    private float horizontalMargin, verticalMargin;
+
+    /// <summary>
+    /// Is the scroll view oriented horizontall or vertically?
+    /// </summary>
+    [SerializeField]
+    private bool horizontal, vertical;
 
     #endregion
 
@@ -96,10 +104,10 @@ public class ScrollContent : MonoBehaviour
         }
 
         // Subtract the margin from both sides.
-        parentWidth = rectTransform.rect.width - (2 * horizontalMargin);
+        width = rectTransform.rect.width - (2 * horizontalMargin);
 
         // Subtract the margin from the top and bottom.
-        parentHeight = rectTransform.rect.height - (2 * verticalMargin);
+        height = rectTransform.rect.height - (2 * verticalMargin);
 
         childWidth = rtChildren[0].rect.width;
         childHeight = rtChildren[0].rect.height;
@@ -116,7 +124,7 @@ public class ScrollContent : MonoBehaviour
     /// </summary>
     private void InitializeContentHorizontal()
     {
-        float originX = 0 - (parentWidth * 0.5f);
+        float originX = 0 - (width * 0.5f);
         float posOffset = childWidth * 0.5f;
         for (int i = 0; i < rtChildren.Length; i++)
         {
@@ -131,7 +139,7 @@ public class ScrollContent : MonoBehaviour
     /// </summary>
     private void InitializeContentVertical()
     {
-        float originY = 0 - (parentHeight * 0.5f);
+        float originY = 0 - (height * 0.5f);
         float posOffset = childHeight * 0.5f;
         for (int i = 0; i < rtChildren.Length; i++)
         {
