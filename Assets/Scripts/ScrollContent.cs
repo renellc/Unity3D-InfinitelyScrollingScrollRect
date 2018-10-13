@@ -29,6 +29,14 @@ public class ScrollContent : MonoBehaviour
     /// </summary>
     public bool Vertical { get { return vertical; } }
 
+    public float ChildWidth { get { return childWidth; } }
+
+    public float ChildHeight { get { return childHeight; } }
+
+    public float ParentWidth { get { return parentWidth; } }
+
+    public float ParentHeight { get { return parentHeight; } }
+
     #endregion
 
     #region Protected Members
@@ -115,12 +123,6 @@ public class ScrollContent : MonoBehaviour
             Vector2 childPos = rtChildren[i].localPosition;
             childPos.x = originX + posOffset + i * (childWidth + itemSpacing);
             rtChildren[i].localPosition = childPos;
-
-            // If the child appears outside of the viewable area, disable it.
-            if (rtChildren[i].localPosition.x - posOffset > 0 + parentWidth * 0.5f)
-            {
-                rtChildren[i].gameObject.SetActive(false);
-            }
         }
     }
 

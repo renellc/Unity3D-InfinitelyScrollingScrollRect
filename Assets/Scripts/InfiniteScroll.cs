@@ -30,9 +30,9 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         if (scrollContent.Vertical)
-            positiveDrag = lastTouchPosition.y > eventData.position.y;
-        else
-            positiveDrag = lastTouchPosition.x > eventData.position.x;
+            positiveDrag = eventData.position.y > lastTouchPosition.y;
+        else if (scrollContent.Horizontal)
+            positiveDrag = eventData.position.x > lastTouchPosition.x;
 
         lastTouchPosition = eventData.position;
     }
@@ -54,5 +54,18 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         int currItemIndex = positiveDrag ? scrollRect.content.childCount - 1 : 0;
         var currItem = scrollRect.content.GetChild(currItemIndex);
+        float itemThreshold = transform.position.x + scrollContent.ParentWidth * 0.5f + outOfBoundsThreshold;
+
+        if (positiveDrag && currItem.position.x - scrollContent.ChildWidth * 0.5f > itemThreshold)
+        {
+            var itemToBeShifted = scrollRect.content.GetChild(0);
+            var newPos = new Vector2
+            {
+                x = itemToBeShifted.position.x - scrollContent.ChildWidth * 1.5f + scrollContent.ItemSpacing,
+                y = itemToBeShifted.position.y
+            };
+            currItem.position = newPos;
+            currItem.SetSiblingIndex(0);
+        }
     }
 }
