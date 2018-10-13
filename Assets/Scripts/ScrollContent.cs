@@ -136,14 +136,8 @@ public class ScrollContent : MonoBehaviour
         for (int i = 0; i < rtChildren.Length; i++)
         {
             Vector2 childPos = rtChildren[i].localPosition;
-            childPos.x = originY + posOffset + i * (childHeight + itemSpacing);
+            childPos.y = originY + posOffset + i * (childHeight + itemSpacing);
             rtChildren[i].localPosition = childPos;
-
-            // If the child appears outside of the viewable area, disable it.
-            if (rtChildren[i].localPosition.y - posOffset > 0 + parentHeight * 0.5f)
-            {
-                rtChildren[i].gameObject.SetActive(false);
-            }
         }
     }
 }
