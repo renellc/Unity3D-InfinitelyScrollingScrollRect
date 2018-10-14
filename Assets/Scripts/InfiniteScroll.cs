@@ -82,6 +82,9 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IS
         }
         else
         {
+            // Scrolling up on the mouse wheel is considered a negative scroll, but I defined
+            // scrolling downwards (scrolls right in a horizontal view) as the positive direciton,
+            // so I check if the if scrollDelta.y is less than zero to check for a positive drag.
             positiveDrag = eventData.scrollDelta.y < 0;
         }
     }
